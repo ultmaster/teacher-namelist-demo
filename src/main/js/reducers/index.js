@@ -1,4 +1,12 @@
-import { OPEN_MODAL, CLOSE_MODAL, UPDATE_DEPARTMENTS, UPDATE_TEACHERS, SET_PAGE, UPDATE_SEARCH } from '../actions';
+import {
+  OPEN_MODAL,
+  CLOSE_MODAL,
+  UPDATE_DEPARTMENTS,
+  UPDATE_TEACHERS,
+  SET_PAGE,
+  UPDATE_SEARCH,
+  UPDATE_USER
+} from '../actions';
 
 const initialState = {
   teachers: {},
@@ -7,6 +15,11 @@ const initialState = {
   pages: {
     number: 0,
     size: 20
+  },
+  user: {
+    username: "",
+    password: "",
+    id: null,
   },
   search: "",
 };
@@ -51,6 +64,15 @@ export default (state = initialState, action) => {
       return {
         ...state,
         search: action.payload.search
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
+        user: {
+          id: action.payload.id,
+          username: action.payload.username,
+          password: action.payload.password,
+        }
       };
     default:
       return state;

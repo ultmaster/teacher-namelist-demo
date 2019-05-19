@@ -1,6 +1,7 @@
 package edu.ecnu.teacherdemo;
 
 import edu.ecnu.teacherdemo.models.Department;
+import edu.ecnu.teacherdemo.models.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -17,6 +18,7 @@ public class SpringDataRestConfig {
             public void configureRepositoryRestConfiguration(
                     RepositoryRestConfiguration config) {
                 config.exposeIdsFor(Department.class);
+                config.exposeIdsFor(User.class);
             }
         };
     }

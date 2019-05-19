@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
-
 public interface TeacherRepository extends PagingAndSortingRepository<Teacher, Integer> {
 
     @Query("select teacher from Teacher teacher join teacher.department department join teacher.department.father father " +

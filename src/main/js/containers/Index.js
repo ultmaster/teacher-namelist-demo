@@ -22,6 +22,7 @@ import List from "@material-ui/core/List";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import Login from "./Login";
 
 const drawerWidth = 180;
 
@@ -228,22 +229,21 @@ class Index extends React.Component {
             </IconButton>
           </div>
           <Divider/>
+          {
+            this.props.user.id ?
+              [<List>
+                <ListItem button>
+                  <ListItemIcon>
+                    <AddIcon/>
+                  </ListItemIcon>
+                  <ListItemText primary="增加"/>
+                </ListItem>
+              </List>,
+                <Divider/>
+              ] : []
+          }
           <List>
-            <ListItem button>
-              <ListItemIcon>
-                <AddIcon/>
-              </ListItemIcon>
-              <ListItemText primary="增加"/>
-            </ListItem>
-          </List>
-          <Divider/>
-          <List>
-            <ListItem button>
-              <ListItemIcon>
-                <AddIcon/>
-              </ListItemIcon>
-              <ListItemText primary="登录"/>
-            </ListItem>
+            <Login/>
           </List>
         </Drawer>
         <main className={classes.content}>
@@ -255,7 +255,9 @@ class Index extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  user: state.user
+});
 
 const mapDispatchToProps = dispatch => ({
   dispatch: dispatch
