@@ -15,7 +15,7 @@ import {connect} from "react-redux";
 import TeacherList from "./TeacherList";
 import {fade} from "@material-ui/core/styles/colorManipulator";
 import InputBase from "@material-ui/core/InputBase";
-import {updateSearch} from "../actions";
+import {OPEN_TEACHER_FORM_DIALOG, openModal, updateSearch} from "../actions";
 import Drawer from "@material-ui/core/Drawer";
 import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
@@ -23,6 +23,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Login from "./Login";
+import TeacherForm from "./TeacherForm";
 
 const drawerWidth = 180;
 
@@ -232,7 +233,7 @@ class Index extends React.Component {
           {
             this.props.user.id ?
               [<List>
-                <ListItem button>
+                <ListItem button onClick={() => { this.props.dispatch(openModal(OPEN_TEACHER_FORM_DIALOG)); }}>
                   <ListItemIcon>
                     <AddIcon/>
                   </ListItemIcon>
@@ -245,6 +246,7 @@ class Index extends React.Component {
           <List>
             <Login/>
           </List>
+          <TeacherForm/>
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer}/>

@@ -7,9 +7,11 @@ export const UPDATE_TEACHERS = "UPDATE_TEACHERS";
 export const SET_PAGE = "SET_PAGE";
 export const UPDATE_SEARCH = "UPDATE_SEARCH";
 export const UPDATE_USER = "UPDATE_USER";
+export const UPDATE_EDITING_TEACHER = "UPDATE_EDITING_TEACHER";
 
 export const OPEN_LOGIN_FORM_DIALOG = "LOGIN_FORM_DIALOG";
 export const OPEN_RESET_PASSWORD_DIALOG = "RESET_PASSWORD_DIALOG";
+export const OPEN_TEACHER_FORM_DIALOG = "OPEN_TEACHER_FORM_DIALOG";
 
 export const openModal = (obj) => ({
   type: OPEN_MODAL,
@@ -161,3 +163,8 @@ export const deleteTeacher = (teacher) => {
     })
   }
 };
+
+export const updateEditingTeacher = (teacher) => ({
+  type: UPDATE_EDITING_TEACHER,
+  payload: teacher
+});

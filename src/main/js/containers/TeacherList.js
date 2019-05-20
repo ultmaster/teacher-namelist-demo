@@ -24,7 +24,7 @@ class TeacherList extends React.Component {
   };
 
   handleChangeRowsPerPage = (event) => {
-    this.props.dispatch(setPage(this.props.teachers.page.number, event.target.value));
+    this.props.dispatch(setPage(0, event.target.value));
   };
 
   componentWillReceiveProps(nextProps, nextContext) {

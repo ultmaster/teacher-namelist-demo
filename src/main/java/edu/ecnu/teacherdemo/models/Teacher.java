@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class Teacher {
 
     private @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "teacher_id")
     Integer id;
     @Column(nullable = false, name = "teacher_name")

@@ -5,7 +5,7 @@ import {
   UPDATE_TEACHERS,
   SET_PAGE,
   UPDATE_SEARCH,
-  UPDATE_USER
+  UPDATE_USER, UPDATE_EDITING_TEACHER
 } from '../actions';
 
 const initialState = {
@@ -20,6 +20,15 @@ const initialState = {
     username: "",
     password: "",
     id: null,
+  },
+  editingTeacher: {
+    name: "",
+    title: "",
+    tel: "",
+    address: "",
+    email: "",
+    school: 10,
+    department: 10,
   },
   search: "",
 };
@@ -46,8 +55,7 @@ export default (state = initialState, action) => {
       action.payload.departments._embedded.departments.map((item, i) => {
         departmentNameMap[i + 1] = {
           id: i + 1,
-          name: item.name,
-          fatherId: item.fatherId
+          ...item,
         };
       });
 
@@ -74,6 +82,11 @@ export default (state = initialState, action) => {
           password: action.payload.password,
         }
       };
+    case UPDATE_EDITING_TEACHER:
+      return {
+        ...state,
+        editingTeacher: action.payload
+      }
     default:
       return state;
   }
