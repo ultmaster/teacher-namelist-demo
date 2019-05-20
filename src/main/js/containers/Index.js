@@ -15,7 +15,7 @@ import {connect} from "react-redux";
 import TeacherList from "./TeacherList";
 import {fade} from "@material-ui/core/styles/colorManipulator";
 import InputBase from "@material-ui/core/InputBase";
-import {OPEN_TEACHER_FORM_DIALOG, openModal, updateSearch} from "../actions";
+import {OPEN_TEACHER_FORM_DIALOG_CREATE, OPEN_TEACHER_FORM_DIALOG_EDIT, openModal, updateSearch} from "../actions";
 import Drawer from "@material-ui/core/Drawer";
 import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
@@ -233,7 +233,7 @@ class Index extends React.Component {
           {
             this.props.user.id ?
               [<List>
-                <ListItem button onClick={() => { this.props.dispatch(openModal(OPEN_TEACHER_FORM_DIALOG)); }}>
+                <ListItem button onClick={() => { this.props.dispatch(openModal(OPEN_TEACHER_FORM_DIALOG_CREATE)); }}>
                   <ListItemIcon>
                     <AddIcon/>
                   </ListItemIcon>

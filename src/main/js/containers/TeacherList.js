@@ -53,6 +53,11 @@ class TeacherList extends React.Component {
               <TableCell>办公电话号码</TableCell>
               <TableCell>办公地址</TableCell>
               <TableCell>电子邮件</TableCell>
+              {
+                this.props.user.id ? [
+                  <TableCell>编辑</TableCell>,
+                  <TableCell>删除</TableCell>] : null
+              }
             </TableRow>
           </TableHead>
           <TableBody>
@@ -77,6 +82,7 @@ const mapStateToProps = state => ({
   teachers: state.teachers,
   pages: state.pages,
   search: state.search,
+  user: state.user,
 });
 
 const mapDispatchToProps = dispatch => ({

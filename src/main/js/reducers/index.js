@@ -7,6 +7,7 @@ import {
   UPDATE_SEARCH,
   UPDATE_USER, UPDATE_EDITING_TEACHER
 } from '../actions';
+import getResourceId from "../utils/getResourceId";
 
 const initialState = {
   teachers: {},
@@ -27,8 +28,9 @@ const initialState = {
     tel: "",
     address: "",
     email: "",
-    school: 10,
-    department: 10,
+    school: 1,
+    department: 2,
+    uri: "",
   },
   search: "",
 };
@@ -83,10 +85,20 @@ export default (state = initialState, action) => {
         }
       };
     case UPDATE_EDITING_TEACHER:
+      const teacher = action.payload;
       return {
         ...state,
-        editingTeacher: action.payload
-      }
+        editingTeacher: {
+          name: teacher.name,
+          title: teacher.title,
+          tel: teacher.tel,
+          address: teacher.address,
+          email: teacher.email,
+          school: teacher._embedded.department.father ? teacher._embedded.department.father.id : 0,
+          department: getResourceId(teacher._embedded.department._links.self.href),
+          uri: teacher._links.self.href,
+        },
+      };
     default:
       return state;
   }

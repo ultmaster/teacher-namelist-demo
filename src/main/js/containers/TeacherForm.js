@@ -8,7 +8,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import {connect} from "react-redux";
 import withRoot from "../withRoot";
 import {withStyles} from "@material-ui/core";
-import {closeModal, login, OPEN_LOGIN_FORM_DIALOG, OPEN_TEACHER_FORM_DIALOG} from "../actions";
+import {
+  closeModal, createTeacher,
+  OPEN_TEACHER_FORM_DIALOG_CREATE, OPEN_TEACHER_FORM_DIALOG_EDIT, updateTeacher
+} from "../actions";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
@@ -31,7 +34,8 @@ class TeacherForm extends React.Component {
   }
 
   handleClose = () => {
-    this.props.dispatchClose();
+    this.props.dispatch(closeModal(OPEN_TEACHER_FORM_DIALOG_CREATE));
+    this.props.dispatch(closeModal(OPEN_TEACHER_FORM_DIALOG_EDIT));
   };
 
   handleChange = (event) => {
@@ -41,7 +45,18 @@ class TeacherForm extends React.Component {
   };
 
   submit = () => {
-    this.props.submit(this.state.username, this.state.password);
+    const teacher = {
+      name: this.state.name,
+      title: this.state.title,
+      tel: this.state.tel,
+      address: this.state.address,
+      email: this.state.email,
+      department: this.props.departments[this.state.department]._links.self.href
+    };
+    if (this.props.openCreate)
+      this.props.dispatchCreate(teacher);
+    else this.props.dispatchEdit(this.state.uri, teacher);
+    this.handleClose();
   };
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -53,19 +68,17 @@ class TeacherForm extends React.Component {
     const firstOptions = Object.values(departments).filter((department) => {
       return department.father === null;
     });
-    console.log(firstOptions);
     const secondOptions = {};
     firstOptions.map((father) => {
       secondOptions[father.id] = Object.values(departments).filter((dept) => dept.father && dept.father.id === father.id);
     });
-    console.log(secondOptions);
 
     return (
       <Dialog
-        open={this.props.open}
-        onClose={this.props.dispatchClose}
+        open={this.props.openCreate || this.props.openEdit}
+        onClose={this.handleClose}
       >
-        <DialogTitle>增加或修改教师档案</DialogTitle>
+        <DialogTitle>{this.props.openCreate ? "增加" : "修改"}教师档案</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus required fullWidth
@@ -148,14 +161,16 @@ class TeacherForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  open: state.modals.indexOf(OPEN_TEACHER_FORM_DIALOG) >= 0,
+  openCreate: state.modals.indexOf(OPEN_TEACHER_FORM_DIALOG_CREATE) >= 0,
+  openEdit: state.modals.indexOf(OPEN_TEACHER_FORM_DIALOG_EDIT) >= 0,
   editingTeacher: state.editingTeacher,
   departments: state.departments,
 });
 
 const mapDispatchToProps = dispatch => ({
-  dispatchClose: () => dispatch(closeModal(OPEN_TEACHER_FORM_DIALOG)),
-  dispatchLogin: (username, password) => dispatch(login(username, password)),
+  dispatch: dispatch,
+  dispatchCreate: (info) => dispatch(createTeacher(info)),
+  dispatchEdit: (uri, info) => dispatch(updateTeacher(uri, info)),
 });
 
 export default connect(mapStateToProps,

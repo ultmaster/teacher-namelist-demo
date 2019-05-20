@@ -11,7 +11,8 @@ export const UPDATE_EDITING_TEACHER = "UPDATE_EDITING_TEACHER";
 
 export const OPEN_LOGIN_FORM_DIALOG = "LOGIN_FORM_DIALOG";
 export const OPEN_RESET_PASSWORD_DIALOG = "RESET_PASSWORD_DIALOG";
-export const OPEN_TEACHER_FORM_DIALOG = "OPEN_TEACHER_FORM_DIALOG";
+export const OPEN_TEACHER_FORM_DIALOG_CREATE = "OPEN_TEACHER_FORM_DIALOG_CREATE";
+export const OPEN_TEACHER_FORM_DIALOG_EDIT = "OPEN_TEACHER_FORM_DIALOG_EDIT";
 
 export const openModal = (obj) => ({
   type: OPEN_MODAL,
@@ -141,11 +142,11 @@ export const createTeacher = (teacher) => {
   }
 };
 
-export const updateTeacher = (teacher) => {
+export const updateTeacher = (uri, teacher) => {
   return (dispatch) => {
     client({
       method: "PUT",
-      path: `/api/teachers/${teacher.id}`,
+      path: uri,
       entity: teacher,
     }).then(() => {
       dispatch(updateTeachers());
@@ -153,11 +154,11 @@ export const updateTeacher = (teacher) => {
   };
 };
 
-export const deleteTeacher = (teacher) => {
+export const deleteTeacher = (uri) => {
   return (dispatch) => {
     client({
       method: "DELETE",
-      path: `/api/teachers/${teacher.id}`
+      path: uri
     }).then(() => {
       dispatch(updateTeachers());
     })
